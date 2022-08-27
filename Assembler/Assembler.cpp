@@ -3,8 +3,8 @@ using namespace std;
 
 map<string, string> opname_to_opcode;
 map<string, string> regname_to_regno;
-vector<string> r_type = {"add", "sub", "addi", "sll"};
-vector<string> i_type = {"lw", "sw", "beq"};
+vector<string> r_type = {"add", "sub", "sll"};
+vector<string> i_type = {"addi", "lw", "sw", "beq"};
 vector<string> j_type = {"jmp"};
 
 void init() {
@@ -20,7 +20,21 @@ void init() {
   regname_to_regno["$ac"] = "00";
   regname_to_regno["$s1"] = "01";
   regname_to_regno["$s2"] = "10";
-  regname_to_regno["$s2"] = "11";
+  regname_to_regno["$s3"] = "11";
+}
+
+string to_binary(int n, int size) {
+  string r;
+  while (n != 0) {
+    r = (n % 2 == 0 ? "0" : "1") + r;
+    n /= 2;
+  }
+
+  while (r.size() < size) {
+    r = "0" + r;
+  }
+
+  return r;
 }
 
 int main() {
@@ -35,7 +49,7 @@ int main() {
     string temp_inst;
     string opname;
     string final_binary_instruction;
-    cout << inst_line << endl;
+    // cout << inst_line << endl;
 
     for (const auto &ch : inst_line) {
       if (ch == ' ' || ch == ',') {
@@ -73,8 +87,8 @@ int main() {
       final_binary_instruction += opname_to_opcode[opname];
       final_binary_instruction.append(regname_to_regno[curr_operation.at(2)]);
       final_binary_instruction.append(regname_to_regno[curr_operation.at(1)]);
-      bitset<5> immediate(curr_operation.at(3));
-      final_binary_instruction.append(immediate.to_string());
+      // cout << to_binary(stoi(curr_operation.at(3)), 3) << endl;
+      final_binary_instruction.append(to_binary(stoi(curr_operation.at(3)), 3));
     } else if (find(j_type.begin(), j_type.end(), opname) != j_type.end()) {
       final_binary_instruction += opname_to_opcode[opname];
       bitset<7> immediate(curr_operation.at(1));
@@ -84,7 +98,7 @@ int main() {
       return 1;
     }
 
-    cout << final_binary_instruction << endl;
+    // cout << final_binary_instruction << endl;
     unsigned int result = bitset<10>(final_binary_instruction).to_ulong();
     cout << hex << uppercase << result << endl;
   }

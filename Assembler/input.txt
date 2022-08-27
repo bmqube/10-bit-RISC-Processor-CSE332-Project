@@ -1,1 +1,2 @@
-sll $s1 $s2 2
+add $s1 $ac $s2
+sub $s3 $ac $s2
