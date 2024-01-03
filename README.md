@@ -9,7 +9,11 @@ This project involves the design and implementation of a 10-bit Reduced Instruct
 - Limited Instruction Set: A small yet versatile instruction set is implemented, covering essential operations such as load, store, arithmetic, and branching.
 
 ## Getting Started
-- Clone the repository: git clone https://github.com/your-username/10-bit-RISC-Processor.git
+- Clone the repository:
+  
+  ```
+  git clone https://github.com/bmqube/10-bit-RISC-Processor-CSE332-Project.git
+  ```
 - Open the project in Logisim and explore the processor's architecture.
 - Please refer to the 'Project ISA' file for detailed information
 
